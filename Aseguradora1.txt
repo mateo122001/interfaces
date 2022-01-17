@@ -1,0 +1,389 @@
+
+--Creacion de las tablas
+
+
+--Tabla Aseguradora
+
+create table Aseguradora(
+Id_Aseguradora varchar (20)        not null,
+Nombre_Aseguradora varchar (20)    not null,
+Direccion_Aseguradora varchar (30) not null
+);
+alter table Aseguradora add primary key (Id_Aseguradora)
+
+
+--Tabla Poliza
+
+create table Poliza(
+Id_Poliza varchar(20)       not null,
+Id_Aseguradora varchar(20)  not null,
+Nombre_Poliza varchar(20)   not null,
+Duracion_Poliza varchar(20) not null,
+Costo_Poliza numeric(3)     not null,
+Tipo_Poliza varchar(20)     not null
+);
+
+alter table Poliza add primary key (Id_Poliza)
+
+
+--Tabla  Asegurado
+
+create table Asegurado(
+Id_Asegurado varchar (20)          not null,
+Id_Poliza varchar(20)              not null, 
+Nombre_Asegurado varchar(20)       not null,
+Apellido_Asegurado varchar(20)     not null,
+Cedula_Asegurado varchar(13)       not null,
+fechaNacimiento_Asegurado date     not null,
+Trabajo_Asegurado varchar(40)      not null,
+Enfermedades_Asegurado varchar(40) not null,
+Direccion_Asegurado varchar(40)    not null,
+InicioSeguro_Asegurado date        not null,
+Telefono_Asegurado varchar(10)     not null,
+IngresoAnual_Asegurado numeric(8)  not null
+);
+alter table Asegurado add primary key (Id_Asegurado)
+
+
+
+--Tabla Factura_pago
+
+create table Factura_pago(
+Numero_Factura varchar (20) not null,
+Fecha_pago date             not null
+);
+
+alter table Factura_pago add primary key (Numero_Factura)
+
+
+--Tabla Detalle pago
+
+create table Detalle_pago(
+Numero_Factura varchar(20) not null,
+Id_Asegurado varchar (20)  not null,
+Fecha_pago date            not null
+);
+
+
+
+--Tabla Beneficiario
+
+create table Beneficiario (
+Id_Beneficiario varchar (20)        not null,
+Id_Asegurado varchar(20)            not null,
+Nombre_Beneficiario varchar(20)     not null,
+Apellido_Beneficiario varchar(20)   not null,
+Cedula_Beneficiario varchar(13)     not null,
+FechaNacimiento_Beneficiario date   not null,
+Direccion_Beneficiario varchar(40)  not null,
+Telefono_Beneficiario varchar(10)   not null,
+IngresoAnual_Beneficiario numeric(8)not null,
+NumeroHijos_BenEficiario numeric(3) not null
+);
+
+alter table Beneficiario add primary key (Id_Beneficiario)
+
+
+
+--Tabla Empleado
+
+create table Empleado(
+Id_Empleado varchar(20)          not null,
+Id_Aseguradora varchar(20)       not null,
+Nombre_Empleado varchar(20)      not null,
+Apellido_Empleado varchar(20)    not null,
+Cedula_Empleado varchar(13)      not null,
+FechaNacimiento_Empleado date    not null,
+Direccion_Empleado varchar(40)   not null,
+fechaInicioTrabajo_Empleado date not null,
+Telefono_Empleado varchar(10)    not null
+);
+alter table Empleado add primary key (Id_Empleado)
+
+
+
+
+alter table Empleado drop fechaInicioTrabajo_Empleado
+alter table Empleado add  fechaInicioTrabajo_Empleado date 
+
+Drop table Aseguradora;
+Drop table Poliza;
+Drop table Asegurado;
+Drop table Factura_pago;
+Drop table Detalle_pago;
+Drop table Beneficiario;
+Drop table Empleado;
+Drop table Detalle_atencion;
+Drop table Detalle_adquisicion;
+
+
+--Tabla Detalle_atencion 
+
+create table Detalle_atencion(
+Id_Empleado varchar (20)  not null,
+Id_Asegurado varchar (20) not null,
+Fecha_Atencion date       not null
+);
+
+--Tabla Detalle_adquisicion
+
+create table Detalle_adquisicion(
+Id_Poliza varchar(20)    not null,
+Id_Asegurado varchar(20) not null,
+Fecha_adquisicion date   not null
+);
+
+
+
+--Ingreso de datos
+
+
+insert into Aseguradora values ('101','Esperanza','Manta');
+insert into Aseguradora values ('102','Consuelo','Quito');
+
+insert into Poliza values ('1001','101','Poliza Esperanza','indefinido',300,'Vida riesgo');
+insert into Poliza values ('1002','101','Poliza Esperanza_C','vida entera',300,'Vida entera');
+
+
+select * from Asegurado
+insert into Asegurado values ('1','1002','Juan','Macias','1316701124',
+'12-02-1990','Medico','Ninguna','Barrio Altamira','23-03-2021','0987726262','1500');
+insert into Asegurado values ('2','1001','Maria','Delgado','1317703124',
+'11-02-1992','Profesora','Asma','Barrio Divino niño','23-03-2021','0987724462','1000');
+insert into Asegurado values ('3','1001','Carlos','Macias','1326701123',
+'14-03-1991','Dentista','Diabetes','Barrio san Pedro','20-04-2021','0983726264','1200');
+insert into Asegurado values ('4','1001','Martin','Parrales','1376701114',
+'14-05-1998','Arquitecto','Ninguna','Barrio San Agustin','23-04-2021','0936726289','1100');
+insert into Asegurado values ('5','1002','Elena','Blanco','1316801134',
+'12-02-1989','Enfermera','Ninguna','Barrio La pradera','23-05-2021','0987976267','1300');
+insert into Asegurado values ('6','1002','Juan','Macias','1317693135',
+'11-02-1993','Vendedor','Alergia a los mariscos','Barrio Santa Martha','26-05-2021','0987956442','700');
+insert into Asegurado values ('7','1002','Cristina','Zambrano','1336704423',
+'14-03-1991','Programadora','Asma','Barrio san La Aurora','19-06-2021','0989926264','1300');
+insert into Asegurado values ('8','1001','Maria','Delgado','1378703214',
+'27-07-1996','Contadora','Alergia a los mariscos','Barrio San Agustin','25-06-2021','0939725283','1200');
+insert into Asegurado values ('9','1001','Elena','Blanco','1319762123',
+'12-02-1994','Enfermera','Diabetes','Ciudadela Puerto Sol','10-07-2021','0984676263','1300');
+insert into Asegurado values ('10','1002','Manuel','Cedeño','1317723324',
+'11-02-1991','Profesor','Asma','Barrio Divino niño','15-07-2021','0987874469','1200');
+
+
+insert into Factura_pago values ('1','23-04-2021');
+insert into Factura_pago values ('2','23-04-2021');
+insert into Factura_pago values ('3','20-05-2021');
+insert into Factura_pago values ('4','23-05-2021');
+insert into Factura_pago values ('5','20-06-2021');
+insert into Factura_pago values ('6','23-06-2021');
+insert into Factura_pago values ('7','19-07-2021');
+insert into Factura_pago values ('8','25-07-2021');
+insert into Factura_pago values ('9','10-08-2021');
+insert into Factura_pago values ('10','15-08-2021');
+
+insert into Detalle_pago values ('1','1','23-04-2021');
+insert into Detalle_pago values ('2','2','23-04-2021');
+insert into Detalle_pago values ('3','3','20-05-2021');
+insert into Detalle_pago values ('4','4','23-05-2021');
+insert into Detalle_pago values ('5','5','20-06-2021');
+insert into Detalle_pago values ('6','6','23-06-2021');
+insert into Detalle_pago values ('7','7','19-07-2021');
+insert into Detalle_pago values ('8','8','25-07-2021');
+
+--en la tabla beneficiario hay hijos y hermanos de los asegurados
+insert into Beneficiario values ('1','1','Marco','Macias','1398373303','21-02-1999','Barrio Altamira','0977382638',10000,2)   ;
+insert into Beneficiario values ('2','2','Xavier','Herrera','1395673302','12-03-1998','Divino niño','0977992637',90000,1)     ;
+insert into Beneficiario values ('3','3','Pedro','Macias','1394363303','14-01-1990','Barrio San Pedro','0967382648',11000,3)  ;
+insert into Beneficiario values ('4','4','Ana','Parrales','1318376303','09-02-1997','Barrio San Agustin','0997682938',12000,2);
+insert into Beneficiario values ('5','5','Diana','Zambrano','1398473601','07-09-2000','Barrio La Pradera','0977365639',5000,1);
+insert into Beneficiario values ('6','6','Bianca','Macias','1398387305','21-02-1999','Barrio Santa Marta','0967383632',5000,1);
+insert into Beneficiario values ('7','7','Carlos','Guerrero','1398093602','07-09-1996','Barrio La Aurora','0977365639',5000,1);
+insert into Beneficiario values ('8','8','Karen','Velez','1378387368','03-11-1998','Barrio San Agustin','0968383472',5000,1)  ;
+select * from Factura_pago
+
+
+
+insert into Empleado values('1001','101','Sebastian','Alvarado','1356678962','12-04-1899','Las Orquideas','12-05-2020','0976383839');
+insert into Empleado values('1002','101','Moises','Dueñas','1356008932','10-04-1895','Ciudadela el Palmar','10-04-2020','0973338378');
+insert into Empleado values('1003','102','Karina','Jimenez','1358878992','12-04-1889','Barrio La pradera','01-01-2020','0976573839');
+insert into Empleado values('1004','102','Maria','Muñoz','1359878972','12-04-1889','Barrio Cuba','01-02-2021','0976553835');
+insert into Empleado values('1005','102','Jesica','Mera','1344878998','12-04-1888','Barrio Altagracia','28-05-2020','0976273854');
+insert into Empleado values('1006','102','Elena','Mera','1334378568','12-04-1892','Barrio Santa Martha','04-03-2020','0926273866');
+
+
+insert into Detalle_atencion values ('1001','2','23-03-2021');
+insert into Detalle_atencion values ('1003','4','23-04-2021');
+insert into Detalle_atencion values ('1003','6','26-05-2021');
+insert into Detalle_atencion values ('1003','8','25-06-2021');
+insert into Detalle_atencion values ('1001','1','23-03-2021');
+insert into Detalle_atencion values ('1001','7','19-06-2021');
+insert into Detalle_atencion values ('1002','3','20-04-2021');
+insert into Detalle_atencion values ('1002','5','23-05-2021');
+insert into Detalle_atencion values ('1002','10','15-07-2021');
+
+
+insert into Detalle_adquisicion values ('1001','2','23-03-2021');
+insert into Detalle_adquisicion values ('1001','4','23-04-2021');
+insert into Detalle_adquisicion values ('1001','3','20-04-2021');
+insert into Detalle_adquisicion values ('1001','8','25-06-2021');
+insert into Detalle_adquisicion values ('1001','9','10-07-2021');
+insert into Detalle_adquisicion values ('1002','1','23-03-2021');
+insert into Detalle_adquisicion values ('1002','5','23-05-2021');
+insert into Detalle_adquisicion values ('1002','7','19-06-2021');
+insert into Detalle_adquisicion values ('1002','10','15-07-2021');
+
+
+
+
+--LLaves Foraneas
+
+
+alter table Detalle_pago
+add constraint FK_Dpa_Factura_pago foreign key (Numero_Factura)
+references Factura_pago(Numero_Factura)
+on delete restrict on update restrict;
+
+
+alter table Detalle_pago
+add constraint FK_Dp_Asegurado foreign key (Id_Asegurado)
+references Asegurado(Id_Asegurado)
+on delete restrict on update restrict;
+
+
+alter table Empleado
+add constraint FK_Emp_Aseguradora foreign key (Id_Aseguradora)
+references Aseguradora(Id_Aseguradora)
+on delete restrict on update restrict;
+
+
+alter table Asegurado
+add constraint FK_Ase_poliza foreign key (Id_Poliza)
+references Poliza(Id_Poliza)
+on delete restrict on update restrict;
+
+
+alter table Beneficiario
+add constraint FK_Ben_Asegurado foreign key (Id_Asegurado)
+references Asegurado(Id_Asegurado)
+on delete restrict on update restrict;
+
+
+alter table Poliza
+add constraint FK_Pol_Aseguradora foreign key (Id_Aseguradora)
+references Aseguradora (Id_Aseguradora)
+on delete restrict on update restrict;
+
+
+alter table Detalle_atencion
+add constraint FK_Dat_Empleado foreign key (Id_Empleado)
+references Empleado(Id_Empleado)
+on delete restrict on update restrict;
+
+
+alter table Detalle_atencion
+add constraint FK_Dat_Asegurado foreign key (Id_Asegurado)
+references Asegurado(Id_Asegurado)
+on delete restrict on update restrict;
+
+
+alter table Detalle_adquisicion
+add constraint FK_Dad_Poliza foreign key (Id_Poliza)
+references Poliza(Id_Poliza)
+on delete restrict on update restrict;
+
+
+alter table Detalle_adquisicion
+add constraint FK_Dad_Asegurado foreign key (Id_Asegurado)
+references Asegurado(Id_Asegurado)
+on delete restrict on update restrict;
+
+
+--Consultas 
+
+
+--Consulta 1
+
+--Mostrar a todos los empleados desde el de menos antigüedad hasta el de más antigüedad. 
+--Debe aparecer en una columna nombres y apellidos, en otras columnas el tiempo que ha trabajado en la aseguradora en años, meses y días. 
+
+select Nombre_Empleado, Apellido_Empleado,(date '05-11-2021'- fechaInicioTrabajo_Empleado )/365 as Años,
+(((date '05-11-2021'- fechaInicioTrabajo_Empleado )%365)/30) as Meses,
+(((date '05-11-2021'- fechaInicioTrabajo_Empleado )%365)%30) as Dias 
+from Empleado order by fechaInicioTrabajo_Empleado
+
+
+--Consulta 2
+
+--Mostrar todos los casos de clientes (Asegurados) atendidos con idéntico primer nombre y apellido paterno.
+-- Debe aparecer una columna con nombre otra con el apellido y en otra columna la cantidad de coincidencias.
+select Nombre_Asegurado, Apellido_Asegurado , count (*) as Repetidos  from Asegurado
+group by Nombre_Asegurado, Apellido_Asegurado  having count(*)>0 ;
+
+
+
+--Consulta 3
+
+--Mostrar todos los casos de clientes (Asegurados) atendidos con el mismo apellido paterno y tipo de póliza o plan de seguro de vida. 
+Debe aparecer en una columna el apellido paterno, otra con el id del tipo de póliza y en otra la cantidad de coincidencias.
+select Apellido_Asegurado, Id_Poliza ,count (*) as Repetidos  from Asegurado
+group by Apellido_Asegurado,  Id_Poliza  having count(*)>0 ;
+
+
+
+--Consulta 4
+--Mostrar los nombres de los beneficiarios ordenados de manera jerárquica de mayor a menor.
+select Nombre_Beneficiario,FechaNacimiento_Beneficiario from Beneficiario order by FechaNacimiento_Beneficiario;
+
+
+
+
+--Consulta 5
+--Un trigger que actualice el número de clientes que adquieren un seguro de vida cada vez que se ingrese uno. 
+
+create function Prime_tgr () returns trigger 
+as
+$$
+declare 
+fecha date:=current_date;
+begin
+insert into Detalle_Adquisicion values  (new.Id_Poliza,new.Id_Asegurado,fecha);
+return new;
+end
+$$
+language plpgsql;
+create trigger prime after insert on Asegurado 
+for each row 
+execute procedure Prime_tgr ();
+insert into Asegurado values ('13','1002','Mateos','Párraga','1316801133','12-02-1990','Medico','Ninguna','Barrio Altamira','23-03-2021','0989726262','1200')
+select * from Asegurado;
+select * from Detalle_Adquisicion;
+
+
+
+--consulta 6
+--Un cursor que muestre los empleados con todos sus clientes y fechas en las que fueron atendidos.
+do 
+$$
+declare 
+registro Record;
+curs_Empl cursor for select * from Detalle_Atencion order by Id_Empleado;
+begin 
+for registro in curs_Empl loop
+Raise Notice 'Empleado: % , Cliente: %',  registro.Id_Empleado,registro.Id_Asegurado;
+Raise Notice 'Fecha: %', registro.Fecha_Atencion;
+end loop;
+end 
+$$
+language plpgsql;
+
+
+--Consulta 7
+--Procedimiento almacenado que devuelva el nombre del asegurado de un Beneficiario que se le ingrese.
+
+create or replace function proceso(num1 varchar) returns varchar
+as
+$$
+select Nombre_Asegurado from asegurado where Id_Asegurado=num1;
+$$
+language sql;
+
+select proceso ('2');
+
